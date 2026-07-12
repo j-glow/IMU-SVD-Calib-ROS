@@ -16,36 +16,9 @@ The primary method evaluated in this project is the novel algebraic solution for
 ### Baseline Comparison: Iterative Method (Levenberg-Marquardt)
 To comprehensively evaluate the SVD method, we implement a classical multi-pose calibration approach based on the Levenberg-Marquardt (LM) algorithm. The LM method minimizes a residual error cost function through non-linear optimization. While effective, it typically requires a good initial guess and its convergence speed can vary.
 
-## Prerequisites
+## Setup and Installation
 
-- **ROS 2**: Ensure you have a working ROS 2 environment (e.g., Humble, Iron, or Rolling).
-- **C++ Compiler**: A compiler supporting C++17 or later.
-- **Eigen3**: For robust matrix operations.
-- **Colcon**: For building the package.
-
-## Building the Package
-
-1. Create a ROS 2 workspace (if you don't have one already):
-   ```bash
-   mkdir -p ~/ros2_ws/src
-   cd ~/ros2_ws/src
-   ```
-
-2. Clone this repository into the `src` directory (if you haven't already):
-   ```bash
-   git clone <repository-url> IMU-SVD-Calib-ROS
-   ```
-
-3. Build the workspace:
-   ```bash
-   cd ~/ros2_ws
-   colcon build --packages-select imu_svd_calib
-   ```
-
-4. Source the workspace:
-   ```bash
-   source install/setup.bash
-   ```
+For a comprehensive, step-by-step walkthrough on how to install ROS 2, configure dependencies (like Eigen3), and build this workspace from scratch, please see the [Full Setup Guide](SETUP_GUIDE.md).
 
 ## Running the Project
  
