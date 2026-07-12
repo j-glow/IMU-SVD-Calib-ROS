@@ -1,0 +1,17 @@
+# Request
+# Number of poses collected for calibration
+uint32 poses_collected
+---
+# Result
+# 3x3 Calibration matrix (flattened)
+float64[9] calibration_matrix
+# 3x1 Bias vector
+float64[3] bias_vector
+# Calibration success
+bool success
+---
+# Feedback
+# Number of poses processed so far
+uint32 poses_processed
+# Current status message
+string status
