@@ -13,6 +13,7 @@ find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(visualization_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 # Find Eigen3
@@ -48,7 +49,7 @@ target_include_directories(imu_calibration_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 target_compile_features(imu_calibration_node PUBLIC c_std_99 cxx_std_17)  # Require C++17
-ament_target_dependencies(imu_calibration_node rclcpp rclcpp_action sensor_msgs std_msgs tf2 tf2_ros)
+ament_target_dependencies(imu_calibration_node rclcpp rclcpp_action sensor_msgs std_msgs tf2 tf2_ros visualization_msgs)
 rosidl_target_interfaces(imu_calibration_node ${PROJECT_NAME} "rosidl_typesupport_cpp")
 # Link Eigen
 target_link_libraries(imu_calibration_node Eigen3::Eigen)
@@ -65,6 +66,10 @@ install(DIRECTORY include/
 
 install(DIRECTORY launch/
   DESTINATION share/${PROJECT_NAME}/launch
+)
+
+install(DIRECTORY rviz/
+  DESTINATION share/${PROJECT_NAME}/rviz
 )
 
 if(BUILD_TESTING)
