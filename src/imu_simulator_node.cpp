@@ -11,7 +11,8 @@ using namespace std::chrono_literals;
 class ImuSimulatorNode : public rclcpp::Node
 {
 public:
-  ImuSimulatorNode() : Node("imu_simulator_node"), current_pose_index_(0)
+  ImuSimulatorNode()
+  : Node("imu_simulator_node"), current_pose_index_(0)
   {
     // Initialize standard poses (gravity vectors in sensor frame)
     double g = 9.81;
@@ -70,13 +71,13 @@ private:
     msg.angular_velocity.y = gyro_noise_dist_(generator_);
     msg.angular_velocity.z = gyro_noise_dist_(generator_);
 
-    // Orientation (not accurately simulated for all poses here, 
+    // Orientation (not accurately simulated for all poses here,
     // but usually only raw accel/gyro is used for calibration)
     msg.orientation.w = 1.0;
     msg.orientation.x = 0.0;
     msg.orientation.y = 0.0;
     msg.orientation.z = 0.0;
-    
+
     // Covariance matrices
     msg.linear_acceleration_covariance[0] = 0.01;
     msg.linear_acceleration_covariance[4] = 0.01;

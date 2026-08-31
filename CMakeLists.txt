@@ -44,7 +44,7 @@ target_link_libraries(imu_simulator_node
 )
 
 # Add calibration node
-add_executable(imu_calibration_node 
+add_executable(imu_calibration_node
   src/imu_calibration_node.cpp
   src/svd_calibration.cpp
   src/lm_calibration.cpp
