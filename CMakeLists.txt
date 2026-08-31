@@ -94,6 +94,22 @@ if(BUILD_TESTING)
   # a copyright and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
+
+  find_package(ament_cmake_gtest REQUIRED)
+
+  ament_add_gtest(test_pose_window test/test_pose_window.cpp)
+  target_include_directories(test_pose_window PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+  target_link_libraries(test_pose_window Eigen3::Eigen)
+
+  ament_add_gtest(test_calibration
+    test/test_calibration.cpp
+    src/svd_calibration.cpp
+    src/lm_calibration.cpp
+  )
+  target_include_directories(test_calibration PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+  target_link_libraries(test_calibration Eigen3::Eigen)
 endif()
 
 ament_package()
