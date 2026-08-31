@@ -20,6 +20,9 @@ To comprehensively evaluate the SVD method, we implement a classical multi-pose 
 
 For a comprehensive, step-by-step walkthrough on how to install ROS 2, configure dependencies (like Eigen3), and build this workspace from scratch, please see the [Full Setup Guide](SETUP_GUIDE.md).
 
+Once set up, see the [Validation Guide](VALIDATION.md) for a step-by-step walkthrough of building,
+testing, and running the pipeline with expected outputs for each step.
+
 ## Running the Project
 
 The calibration node exposes a `calibrate_imu` ROS 2 action (`imu_svd_calib/action/CalibrateImu`)
