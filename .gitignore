@@ -3,6 +3,9 @@ logs/
 build/
 bin/
 lib/
+
+# Recorded rosbag2 datasets (see launch/record_dataset.launch.py)
+bags/
 msg_gen/
 srv_gen/
 msg/*Action.msg
