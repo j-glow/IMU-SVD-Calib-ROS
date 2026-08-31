@@ -1,17 +1,22 @@
-# Request
-# Number of poses collected for calibration
-uint32 poses_collected
+# Goal
+# Number of distinct static poses to collect before running calibration.
+# Both the SVD and Levenberg-Marquardt methods are run for comparison.
+uint32 num_poses
 ---
 # Result
-# 3x3 Calibration matrix (flattened)
-float64[9] calibration_matrix
-# 3x1 Bias vector
-float64[3] bias_vector
-# Calibration success
 bool success
+
+# SVD (Rupniewski) results
+float64[9] svd_calibration_matrix
+float64[3] svd_bias_vector
+float64 svd_rmse
+
+# Levenberg-Marquardt baseline results
+float64[9] lm_calibration_matrix
+float64[3] lm_bias_vector
+float64 lm_rmse
 ---
 # Feedback
-# Number of poses processed so far
-uint32 poses_processed
-# Current status message
+uint32 poses_collected
+uint32 poses_needed
 string status
