@@ -34,7 +34,7 @@ private:
     }
 
     current_pose_samples_.push_back({raw(0), raw(1), raw(2)});
-                                     
+
     if (current_pose_samples_.size() == 100) {
       // Average 100 samples
       Eigen::Vector3d avg_acc(0.0, 0.0, 0.0);
@@ -44,9 +44,25 @@ private:
         avg_acc(2) += sample[2];
       }
       avg_acc /= 100.0;
-      
+
+      // Reject windows that straddle a pose transition: if any sample
+      // deviates far from the window average, the sensor was still moving
+      // partway through this batch and the average does not correspond to
+      // a single stable orientation (violates the ||v||=c model assumption).
+      double max_dev = 0.0;
+      for (const auto& sample : current_pose_samples_) {
+        Eigen::Vector3d s(sample[0], sample[1], sample[2]);
+        max_dev = std::max(max_dev, (s - avg_acc).norm());
+      }
+
       current_pose_samples_.clear();
-      
+
+      if (max_dev > 1.0) {
+        // Unstable window (mid-transition): discard and resynchronize
+        // on the next batch rather than treating it as a valid pose.
+        return;
+      }
+
       // Check if it's a distinct pose (euclidean distance > 2.0 m/s^2)
       bool distinct = true;
       for (const auto& pose : collected_poses_) {
@@ -75,7 +91,6 @@ private:
     for (int i = 0; i < 9; ++i) {
       M.col(i) = collected_poses_[i];
     }
-    
     double ref_mag = 9.81;
     Eigen::MatrixXd svd_A;
     Eigen::VectorXd svd_o;
