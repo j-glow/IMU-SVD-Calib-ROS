@@ -37,7 +37,11 @@ target_include_directories(imu_simulator_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 target_compile_features(imu_simulator_node PUBLIC c_std_99 cxx_std_17)  # Require C++17
-ament_target_dependencies(imu_simulator_node rclcpp sensor_msgs std_msgs)
+target_link_libraries(imu_simulator_node
+  rclcpp::rclcpp
+  sensor_msgs::sensor_msgs
+  std_msgs::std_msgs
+)
 
 # Add calibration node
 add_executable(imu_calibration_node 
@@ -49,10 +53,18 @@ target_include_directories(imu_calibration_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 target_compile_features(imu_calibration_node PUBLIC c_std_99 cxx_std_17)  # Require C++17
-ament_target_dependencies(imu_calibration_node rclcpp rclcpp_action sensor_msgs std_msgs tf2 tf2_ros visualization_msgs)
-rosidl_target_interfaces(imu_calibration_node ${PROJECT_NAME} "rosidl_typesupport_cpp")
-# Link Eigen
-target_link_libraries(imu_calibration_node Eigen3::Eigen)
+target_link_libraries(imu_calibration_node
+  rclcpp::rclcpp
+  rclcpp_action::rclcpp_action
+  sensor_msgs::sensor_msgs
+  std_msgs::std_msgs
+  tf2::tf2
+  tf2_ros::tf2_ros
+  visualization_msgs::visualization_msgs
+  Eigen3::Eigen
+)
+rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
+target_link_libraries(imu_calibration_node "${cpp_typesupport_target}")
 
 install(TARGETS
   imu_simulator_node
